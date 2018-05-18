@@ -58,7 +58,7 @@ public class MainActivity extends Activity
             }
         });
 
-        getPairedBluetoothDevices(context);
+        //getPairedBluetoothDevices(context);
     }
 
     private void speakOut(final Context context, @StringRes final int sayResId) {
