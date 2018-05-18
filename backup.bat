@@ -1,0 +1,19 @@
+@echo off
+SET SrcPath=.\
+SET TargetDir=d:\soft\Dropbox\Projects\ObdNotifier
+
+:: system date is in UA format
+Set datestr=%DATE:~6,4%%DATE:~3,2%%DATE:~0,2%-%TIME:~0,2%%TIME:~3,2%
+
+::wait for user input
+set /p comments= Enter check in comments for project: 
+
+:BackupFiles
+SET TargetFile=%TargetDir%\%datestr% %comments%.7z
+ECHO -------------------------------------------
+ECHO Create new project's backup file %TargetFile%
+ECHO -------------------------------------------
+call "c:\Program Files\7-Zip\7z" a -aoa -mx=5 -ms=on -r -ssw -t7z "%TargetFile%" "%SrcPath%\*" -xr!*.log -xr!.gradle -xr!.idea -xr!build
+
+:Exit
+pause

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="appid_to_run" translatable="false">com.MyGreenVolt</string>
+    <integer name="run_app_delay_millis">10000</integer>
+</resources>
