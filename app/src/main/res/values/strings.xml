@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">OBDII Notifier</string>
+    <string name="app_running">Myvolt app is already running</string>
     <string name="turnon_obd_device_title">Turn on OBD2 device and dash camera</string>
+    <string name="bluetooth_available_title">Available bluetooth devices:</string>
+    <string name="bluetooth_not_available_title">Bluetooth is not supported, disabled or no paired devices</string>
 </resources>

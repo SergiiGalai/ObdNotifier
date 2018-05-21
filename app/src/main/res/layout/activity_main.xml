@@ -8,11 +8,8 @@
     tools:context="com.chebur.obdnotifier.MainActivity">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleType="fitXY"
-        android:scaleX="1.5"
-        android:scaleY="1.0"
-        android:src="@drawable/chevy_volt_2016" />
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/chevrolet_volt_2016"/>
 
 </android.support.constraint.ConstraintLayout>
