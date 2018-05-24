@@ -1,8 +1,9 @@
 @echo off
-SET SrcPath=.\app\build\outputs\apk\debug
-for /f "tokens=1,2 delims==" %%a in (batchconfig.ini) do (
-if %%a==CloudStorage set TargetDir=%%b
+for /f "tokens=1,2 delims==" %%a in (..\batchconfig.ini) do (
+if %%a==CloudStorage set RootDir=%%b
 )
-ECHO %TargetDir%
+SET SrcPath=.\app\build\outputs\apk\debug
+SET TargetDir=%RootDir%\ObdNotifier\output
 
-XCOPY /Y %SrcPath%\*.apk %TargetDir%\output\obdNotifier.*
+ECHO %TargetDir%
+XCOPY /Y %SrcPath%\*.apk %TargetDir%\obdNotifier.*

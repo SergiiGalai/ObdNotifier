@@ -1,10 +1,9 @@
 @echo off
-SET SrcPath=.\
-
-for /f "tokens=1,2 delims==" %%a in (batchconfig.ini) do (
-if %%a==CloudStorage set TargetDir=%%b
+for /f "tokens=1,2 delims==" %%a in (..\batchconfig.ini) do (
+if %%a==CloudStorage set RootDir=%%b
 )
-ECHO %TargetDir%
+SET SrcPath=.\
+SET TargetDir=%RootDir%\ObdNotifier
 
 :: system date is in UA format
 Set datestr=%DATE:~6,4%%DATE:~3,2%%DATE:~0,2%-%TIME:~0,2%%TIME:~3,2%
