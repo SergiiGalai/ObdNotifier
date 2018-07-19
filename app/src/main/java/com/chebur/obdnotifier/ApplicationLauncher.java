@@ -20,9 +20,9 @@ import java.util.TreeMap;
 
 public class ApplicationLauncher
 {
-    final Activity context;
+    private final Activity context;
 
-    public ApplicationLauncher(Activity activity) {
+    ApplicationLauncher(Activity activity) {
         this.context = activity;
     }
 
@@ -39,7 +39,7 @@ public class ApplicationLauncher
         return false;
     }
 
-    public List<String> getRunningAppProcesses() {
+    List<String> getRunningAppProcesses() {
         UsageStatsManager usm = (UsageStatsManager)context.getSystemService(Context.USAGE_STATS_SERVICE);
         Calendar calendar=Calendar.getInstance();
         long toTime=calendar.getTimeInMillis();
@@ -50,7 +50,7 @@ public class ApplicationLauncher
         List<String> names = new ArrayList<>();
 
         if (appList != null && appList.size() > 0) {
-            SortedMap<Long, UsageStats> mySortedMap = new TreeMap<Long, UsageStats>();
+            SortedMap<Long, UsageStats> mySortedMap = new TreeMap<>();
             for (UsageStats usageStats : appList) {
                 mySortedMap.put(usageStats.getLastTimeUsed(), usageStats);
                 names.add(usageStats.getPackageName());
@@ -60,12 +60,12 @@ public class ApplicationLauncher
     }
 
 
-    public void delayedStart(@StringRes final int applicationNameResourseId, @IntegerRes final int delayMillisResId){
+    public void delayedStart(@StringRes final int applicationNameResourceId, @IntegerRes final int delayMillisResId){
         final Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                final String packageName = Helper.resourceToString(context, applicationNameResourseId);
+                final String packageName = Helper.resourceToString(context, applicationNameResourceId);
                 if (!tryStartApp(context, packageName)){
                     openOnPlayMarket(context, packageName);
                 }
