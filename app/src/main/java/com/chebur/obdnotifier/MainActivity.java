@@ -24,6 +24,7 @@ public class MainActivity extends Activity
     private Notification notification;
     private ApplicationLauncher launcher;
     private Button cancelButton;
+    private ApplicationLauncher.DelayedStartApplication delayedApplicationStart;
 
     @Override
     public void onDestroy() {
@@ -45,6 +46,8 @@ public class MainActivity extends Activity
         {
             @Override
             public void onClick(View v) {
+                if (delayedApplicationStart != null)
+                    launcher.cancelStart(delayedApplicationStart);
                 finish();
             }
         });
@@ -66,8 +69,8 @@ public class MainActivity extends Activity
             @Override
             public void onInit(int status) {
                 if(status == TextToSpeech.SUCCESS){
-                    int result=tts.setLanguage(Locale.US);
-                    if(result==TextToSpeech.LANG_MISSING_DATA || result==TextToSpeech.LANG_NOT_SUPPORTED){
+                    int result = tts.setLanguage(Locale.US);
+                    if(result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED){
                         Log.e(TAG, "This Language is not supported");
                     }
                     else{
@@ -94,7 +97,7 @@ public class MainActivity extends Activity
         if (launcher.isAppRunning(Helper.resourceToString(context, R.string.appid_to_run))){
             notification.showLongToast(R.string.app_running);
         }else{
-            launcher.delayedStart(R.string.appid_to_run, R.integer.run_app_delay_millis);
+            delayedApplicationStart = launcher.delayedStart(R.string.appid_to_run, R.integer.run_app_delay_millis);
         }
     }
 

@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.IntegerRes;
+import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
 
 import java.util.ArrayList;
@@ -60,9 +61,10 @@ public class ApplicationLauncher
     }
 
 
-    public void delayedStart(@StringRes final int applicationNameResourceId, @IntegerRes final int delayMillisResId){
-        final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+    public DelayedStartApplication delayedStart(@StringRes final int applicationNameResourceId, @IntegerRes final int delayMillisResId){
+        DelayedStartApplication result = new DelayedStartApplication();
+        result.handler = new Handler();
+        result.method = new Runnable() {
             @Override
             public void run() {
                 final String packageName = Helper.resourceToString(context, applicationNameResourceId);
@@ -71,7 +73,18 @@ public class ApplicationLauncher
                 }
                 context.finish();
             }
-        }, context.getResources().getInteger(delayMillisResId));
+        };
+        result.handler.postDelayed(result.method, context.getResources().getInteger(delayMillisResId));
+        return result;
+    }
+
+    public void cancelStart(DelayedStartApplication delayedMethod){
+        delayedMethod.handler.removeCallbacks(delayedMethod.method);
+    }
+
+    public class DelayedStartApplication{
+        public Handler handler;
+        public Runnable method;
     }
 
     private static boolean tryStartApp(Context context, String packageName) {

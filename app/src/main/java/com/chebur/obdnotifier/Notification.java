@@ -1,6 +1,7 @@
 package com.chebur.obdnotifier;
 
 import android.content.Context;
+import android.os.Build;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
@@ -21,7 +22,14 @@ public class Notification{
     }
 
     public void showAndSpeak(TextToSpeech tts, @StringRes final int resId){
-        tts.speak(Helper.resourceToString(context, resId), TextToSpeech.QUEUE_FLUSH, null);
+        String text = Helper.resourceToString(context, resId);
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,null);
+        } else {
+            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
+        }
+
         showLongToast(resId);
     }
 }
