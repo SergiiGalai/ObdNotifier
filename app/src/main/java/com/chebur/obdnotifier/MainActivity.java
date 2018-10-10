@@ -96,8 +96,8 @@ public class MainActivity extends Activity
         //List<String> appProcesses = launcher.getRunningAppProcesses();
         //showProcesses(appProcesses);
 
+        notification.showLongToast(R.string.notification_title);
         if (userShouldBeNotified(context)){
-            notification.showLongToast(R.string.notification_title);
             notification.showAndSpeak(tts, R.string.notification_title);
             settingsWriter.saveLastTimeNotified(TimeHelper.now());
 
@@ -118,7 +118,7 @@ public class MainActivity extends Activity
 
         long diff = TimeHelper.now() - lastTimeNotified;
         long minutesDiff = TimeUnit.MILLISECONDS.toMinutes(diff);
-        if (minutesDiff > context.getResources().getInteger(R.integer.donot_notify_delay_minutes))
+        if (minutesDiff >= context.getResources().getInteger(R.integer.donot_notify_delay_minutes))
             return true;
 
         return false;
