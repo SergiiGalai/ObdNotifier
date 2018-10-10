@@ -6,4 +6,4 @@ SET SrcPath=.\app\build\outputs\apk\free\debug
 SET TargetDir=%RootDir%\ObdNotifier\output
 
 ECHO %TargetDir%
-XCOPY /Y %SrcPath%\*.apk %TargetDir%\obdNotifier.*
+XCOPY /Y %SrcPath%\*.apk %TargetDir%\carNotifier.*
