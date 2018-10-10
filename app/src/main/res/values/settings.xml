@@ -2,4 +2,5 @@
 <resources>
     <string name="appid_to_run" translatable="false">com.MyGreenVolt</string>
     <integer name="run_app_delay_millis">10000</integer>
+    <integer name="donot_notify_delay_minutes">30</integer>
 </resources>

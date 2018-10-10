@@ -1,20 +1,21 @@
 package com.chebur.obdnotifier;
 
 import android.app.Activity;
-import android.bluetooth.BluetoothDevice;
+import android.content.Context;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
-import android.support.annotation.StringRes;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 
-import java.util.List;
+import com.chebur.obdnotifier.helpers.Helper;
+import com.chebur.obdnotifier.helpers.TimeHelper;
+import com.chebur.obdnotifier.settings.ISettingsReader;
+import com.chebur.obdnotifier.settings.ISettingsWriter;
+
 import java.util.Locale;
-import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends Activity
 {
@@ -25,6 +26,19 @@ public class MainActivity extends Activity
     private ApplicationLauncher launcher;
     private Button cancelButton;
     private ApplicationLauncher.DelayedStartApplication delayedApplicationStart;
+    private ISettingsReader settingsReader;
+    private ISettingsWriter settingsWriter;
+
+    private void initializeVariables() {
+        cancelButton = findViewById(R.id.cancelButton);
+
+        launcher = new ApplicationLauncher(this);
+        notification = new Notification(this);
+        bluetoothManager = new BluetoothManager(this);
+        settingsReader = Factory.createSettings(this);
+        settingsWriter = Factory.createSettingsWriter(this);
+        tts = new TextToSpeech(this, createInitListener());
+    }
 
     @Override
     public void onDestroy() {
@@ -51,15 +65,6 @@ public class MainActivity extends Activity
                 finish();
             }
         });
-    }
-
-    private void initializeVariables() {
-        cancelButton = findViewById(R.id.cancelButton);
-
-        launcher = new ApplicationLauncher(this);
-        notification = new Notification(this);
-        bluetoothManager = new BluetoothManager(this);
-        tts = new TextToSpeech(this, createInitListener());
     }
 
     @NonNull
@@ -91,14 +96,36 @@ public class MainActivity extends Activity
         //List<String> appProcesses = launcher.getRunningAppProcesses();
         //showProcesses(appProcesses);
 
-        notification.showLongToast(R.string.turnon_obd_device_title);
-        notification.showAndSpeak(tts, R.string.turnon_obd_device_title);
+        if (userShouldBeNotified(context)){
+            notification.showLongToast(R.string.notification_title);
+            notification.showAndSpeak(tts, R.string.notification_title);
+            settingsWriter.saveLastTimeNotified(TimeHelper.now());
 
-        if (launcher.isAppRunning(Helper.resourceToString(context, R.string.appid_to_run))){
-            notification.showLongToast(R.string.app_running);
-        }else{
-            delayedApplicationStart = launcher.delayedStart(R.string.appid_to_run, R.integer.run_app_delay_millis);
+            if (appShouldBeRun(context)){
+                delayedApplicationStart = launcher.delayedStart(R.string.appid_to_run, R.integer.run_app_delay_millis);
+            }else{
+                notification.showLongToast(R.string.app_running);
+            }
+        } else {
+            context.finish();
         }
+    }
+
+    private boolean userShouldBeNotified(final Context context){
+        long lastTimeNotified = settingsReader.getLastTimeNotified();
+        if (lastTimeNotified == 0)
+            return true;
+
+        long diff = TimeHelper.now() - lastTimeNotified;
+        long minutesDiff = TimeUnit.MILLISECONDS.toMinutes(diff);
+        if (minutesDiff > context.getResources().getInteger(R.integer.donot_notify_delay_minutes))
+            return true;
+
+        return false;
+    }
+
+    private boolean appShouldBeRun(final Context context){
+        return !launcher.isAppRunning(Helper.resourceToString(context, R.string.appid_to_run));
     }
 
 //    private void showProcesses(List<String> appProcesses) {

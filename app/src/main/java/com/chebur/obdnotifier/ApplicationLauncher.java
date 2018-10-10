@@ -1,7 +1,6 @@
 package com.chebur.obdnotifier;
 
 import android.app.Activity;
-import android.app.ActivityManager;
 import android.app.usage.UsageStats;
 import android.app.usage.UsageStatsManager;
 import android.content.Context;
@@ -9,17 +8,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
 import android.support.annotation.IntegerRes;
-import android.support.annotation.NonNull;
 import android.support.annotation.StringRes;
+
+import com.chebur.obdnotifier.helpers.Helper;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Collections;
 import java.util.List;
 import java.util.SortedMap;
 import java.util.TreeMap;
 
-public class ApplicationLauncher
+class ApplicationLauncher
 {
     private final Activity context;
 
@@ -27,7 +26,7 @@ public class ApplicationLauncher
         this.context = activity;
     }
 
-    public boolean isAppRunning(String packageName) {
+    boolean isAppRunning(String packageName) {
         final List<String> processes = getRunningAppProcesses();
         if (processes != null)
         {
@@ -40,7 +39,7 @@ public class ApplicationLauncher
         return false;
     }
 
-    List<String> getRunningAppProcesses() {
+    private List<String> getRunningAppProcesses() {
         UsageStatsManager usm = (UsageStatsManager)context.getSystemService(Context.USAGE_STATS_SERVICE);
         Calendar calendar=Calendar.getInstance();
         long toTime=calendar.getTimeInMillis();
@@ -61,7 +60,7 @@ public class ApplicationLauncher
     }
 
 
-    public DelayedStartApplication delayedStart(@StringRes final int applicationNameResourceId, @IntegerRes final int delayMillisResId){
+    DelayedStartApplication delayedStart(@StringRes final int applicationNameResourceId, @IntegerRes final int delayMillisResId){
         DelayedStartApplication result = new DelayedStartApplication();
         result.handler = new Handler();
         result.method = new Runnable() {
@@ -78,13 +77,13 @@ public class ApplicationLauncher
         return result;
     }
 
-    public void cancelStart(DelayedStartApplication delayedMethod){
+    void cancelStart(DelayedStartApplication delayedMethod){
         delayedMethod.handler.removeCallbacks(delayedMethod.method);
     }
 
-    public class DelayedStartApplication{
-        public Handler handler;
-        public Runnable method;
+    class DelayedStartApplication{
+        Handler handler;
+        Runnable method;
     }
 
     private static boolean tryStartApp(Context context, String packageName) {

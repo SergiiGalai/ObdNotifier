@@ -6,6 +6,8 @@ import android.speech.tts.TextToSpeech;
 import android.support.annotation.StringRes;
 import android.widget.Toast;
 
+import com.chebur.obdnotifier.helpers.Helper;
+
 public class Notification{
     private final Context context;
 
