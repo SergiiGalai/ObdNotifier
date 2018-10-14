@@ -25,7 +25,7 @@ public class ResourcesSettingsReader implements ISettingsReader
 
     @Override
     public String getTextToSpeak() {
-        return Helper.resourceToString(context, R.string.notification_title);
+        return Helper.resourceToString(context, R.string.pref_default_text_to_speak);
     }
 
     @Override

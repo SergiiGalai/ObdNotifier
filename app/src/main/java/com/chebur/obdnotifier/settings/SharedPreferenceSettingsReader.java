@@ -19,7 +19,8 @@ public class SharedPreferenceSettingsReader implements ISettingsReader
 
     @Override
     public int getApplicationStartDelayMillis(){
-        return preferences.getInt("app_start_delay", resourcesReader.getApplicationStartDelayMillis());
+        String val = preferences.getString("app_start_delay", String.valueOf(resourcesReader.getApplicationStartDelayMillis()));
+        return Integer.parseInt( val );
     }
 
     @Override
@@ -34,7 +35,8 @@ public class SharedPreferenceSettingsReader implements ISettingsReader
 
     @Override
     public int getSilentNotificationMinutes() {
-        return preferences.getInt("silent_notification_minutes", resourcesReader.getSilentNotificationMinutes());
+        String val = preferences.getString("silent_notification_minutes", String.valueOf(resourcesReader.getSilentNotificationMinutes()));
+        return Integer.parseInt( val );
     }
 }
 

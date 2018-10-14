@@ -180,6 +180,8 @@ public class MainActivity extends Activity
         switch (menuItem.getItemId())
         {
             case R.id.settings:
+                if (delayedApplicationStart != null)
+                    launcher.cancelStart(delayedApplicationStart);
                 startActivity(new Intent(this, SettingsActivity.class));
                 return true;
             default:
