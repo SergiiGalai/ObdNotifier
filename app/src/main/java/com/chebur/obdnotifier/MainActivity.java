@@ -85,7 +85,7 @@ public class MainActivity extends Activity
                     }
                 }
                 else
-                    Log.e(TAG, "Initilization Failed!");
+                    Log.e(TAG, "Initialization Failed!");
             }
         };
     }
@@ -118,8 +118,10 @@ public class MainActivity extends Activity
     }
 
     private boolean userShouldBeNotified(){
-        return runApplicationRepository.getLastTimeNotified() == 0 ||
-               getMinutesSinceLastNotification() >= settingsReader.getSilentNotificationMinutes();
+        return true;
+
+        //return runApplicationRepository.getLastTimeNotified() == 0
+        //        || getMinutesSinceLastNotification() >= settingsReader.getSilentNotificationMinutes();
     }
 
     private long getMinutesSinceLastNotification(){
@@ -167,4 +169,21 @@ public class MainActivity extends Activity
 //        }
 //    }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem menuItem) {
+        switch (menuItem.getItemId())
+        {
+            case R.id.settings:
+                startActivity(new Intent(this, SettingsActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(menuItem);
+        }
+    }
 }
