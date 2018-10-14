@@ -23,15 +23,7 @@ public class Notification{
         Toast.makeText(context, message, Toast.LENGTH_LONG).show();
     }
 
-    public void showAndSpeak(TextToSpeech tts, @StringRes final int resId){
-        String text = Helper.resourceToString(context, resId);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,null);
-        } else {
-            tts.speak(text, TextToSpeech.QUEUE_FLUSH, null);
-        }
-
-        showLongToast(resId);
+    public void speak(TextToSpeech tts, String text){
+        tts.speak(text,TextToSpeech.QUEUE_FLUSH,null,null);
     }
 }

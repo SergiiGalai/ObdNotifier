@@ -1,5 +1,8 @@
 package com.chebur.obdnotifier.settings;
 
 public interface ISettingsReader {
-    long getLastTimeNotified();
+    int getApplicationStartDelayMillis();
+    String getPackageNameToStart();
+    String getTextToSpeak();
+    int getSilentNotificationMinutes();
 }

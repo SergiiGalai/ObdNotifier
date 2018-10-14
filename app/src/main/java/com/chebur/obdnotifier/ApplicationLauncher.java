@@ -59,21 +59,19 @@ class ApplicationLauncher
         return names;
     }
 
-
-    DelayedStartApplication delayedStart(@StringRes final int applicationNameResourceId, @IntegerRes final int delayMillisResId){
+    DelayedStartApplication delayedStart(final String packageName, final int delayMillis){
         DelayedStartApplication result = new DelayedStartApplication();
         result.handler = new Handler();
         result.method = new Runnable() {
             @Override
             public void run() {
-                final String packageName = Helper.resourceToString(context, applicationNameResourceId);
                 if (!tryStartApp(context, packageName)){
                     openOnPlayMarket(context, packageName);
                 }
                 context.finish();
             }
         };
-        result.handler.postDelayed(result.method, context.getResources().getInteger(delayMillisResId));
+        result.handler.postDelayed(result.method, delayMillis);
         return result;
     }
 

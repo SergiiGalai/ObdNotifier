@@ -11,11 +11,6 @@ public class SharedPreferenceSettingsWriter implements ISettingsWriter {
         preferences = PreferenceManager.getDefaultSharedPreferences(context);
     }
 
-    @Override
-    public void saveLastTimeNotified(long value){
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putLong("last_time_notified", value);
-        editor.commit();
-    }
+
 }
 
