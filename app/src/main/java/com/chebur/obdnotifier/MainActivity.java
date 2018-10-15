@@ -118,10 +118,10 @@ public class MainActivity extends Activity
     }
 
     private boolean userShouldBeNotified(){
-        return true;
+        //return true;
 
-        //return runApplicationRepository.getLastTimeNotified() == 0
-        //        || getMinutesSinceLastNotification() >= settingsReader.getSilentNotificationMinutes();
+        return runApplicationRepository.getLastTimeNotified() == 0
+                || getMinutesSinceLastNotification() >= settingsReader.getSilentNotificationMinutes();
     }
 
     private long getMinutesSinceLastNotification(){
