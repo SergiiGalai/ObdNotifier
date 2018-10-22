@@ -1,31 +1,5 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <EditTextPreference
-        android:defaultValue="@string/pref_default_silent_notification_minutes"
-        android:inputType="number"
-        android:key="silent_notification_minutes"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/pref_title_silent_notification_minutes" />
-
-    <EditTextPreference
-        android:defaultValue="@string/pref_default_app_start_delay"
-        android:inputType="number"
-        android:key="app_start_delay"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/pref_title_app_start_delay" />
-
-    <EditTextPreference
-        android:defaultValue="@string/pref_default_start_app_id"
-        android:inputType="text"
-        android:key="start_app_id"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/pref_title_start_app_id" />
 
     <EditTextPreference
         android:defaultValue="@string/pref_default_text_to_speak"
@@ -35,5 +9,40 @@
         android:selectAllOnFocus="true"
         android:singleLine="true"
         android:title="@string/pref_title_text_to_speak" />
+
+    <SwitchPreference
+        android:defaultValue="true"
+        android:key="is_start_app"
+        android:title="@string/pref_title_is_start_app" />
+
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_silent_notification_minutes"
+        android:inputType="number"
+        android:key="silent_notification_minutes"
+        android:dependency="is_start_app"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_silent_notification_minutes" />
+
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_app_start_delay"
+        android:inputType="number"
+        android:key="app_start_delay"
+        android:dependency="is_start_app"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_app_start_delay" />
+
+    <EditTextPreference
+        android:defaultValue="@string/pref_default_start_app_id"
+        android:inputType="text"
+        android:key="start_app_id"
+        android:dependency="is_start_app"
+        android:maxLines="1"
+        android:selectAllOnFocus="true"
+        android:singleLine="true"
+        android:title="@string/pref_title_start_app_id" />
 
 </PreferenceScreen>

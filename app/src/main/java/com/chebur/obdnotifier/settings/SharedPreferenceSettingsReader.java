@@ -38,5 +38,10 @@ public class SharedPreferenceSettingsReader implements ISettingsReader
         String val = preferences.getString("silent_notification_minutes", String.valueOf(resourcesReader.getSilentNotificationMinutes()));
         return Integer.parseInt( val );
     }
+
+    @Override
+    public boolean isStartAppAllowed(){
+        return preferences.getBoolean("is_start_app", resourcesReader.isStartAppAllowed());
+    }
 }
 

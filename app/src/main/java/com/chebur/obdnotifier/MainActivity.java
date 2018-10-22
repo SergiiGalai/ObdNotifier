@@ -105,12 +105,14 @@ public class MainActivity extends Activity
             notification.speak(tts, textToSpeak);
             runApplicationRepository.saveLastTimeNotified(TimeHelper.now());
 
-            String packageName = settingsReader.getPackageNameToStart();
-            if (appShouldBeRun(packageName)){
-                int delayMillis = settingsReader.getApplicationStartDelayMillis();
-                delayedApplicationStart = launcher.delayedStart(packageName, delayMillis);
-            }else{
-                notification.showLongToast(R.string.app_running);
+            if (settingsReader.isStartAppAllowed()){
+                String packageName = settingsReader.getPackageNameToStart();
+                if (appShouldBeRun(packageName)){
+                    int delayMillis = settingsReader.getApplicationStartDelayMillis();
+                    delayedApplicationStart = launcher.delayedStart(packageName, delayMillis);
+                }else{
+                    notification.showLongToast(R.string.app_running);
+                }
             }
         } else {
             context.finish();

@@ -32,4 +32,9 @@ public class ResourcesSettingsReader implements ISettingsReader
     public int getSilentNotificationMinutes() {
         return Helper.resourceToInt(context, R.integer.donot_notify_delay_minutes);
     }
+
+    @Override
+    public boolean isStartAppAllowed() {
+        return true;
+    }
 }

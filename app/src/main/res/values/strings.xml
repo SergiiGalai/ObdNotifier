@@ -19,5 +19,6 @@
     <string name="pref_default_text_to_speak">Turn on OBD device and dash camera</string>
     <string name="pref_title_silent_notification_minutes">Keep silent in minutes since last one</string>
     <string name="pref_default_silent_notification_minutes" translatable="false">30</string>
+    <string name="pref_title_is_start_app">Start another application</string>
 
 </resources>

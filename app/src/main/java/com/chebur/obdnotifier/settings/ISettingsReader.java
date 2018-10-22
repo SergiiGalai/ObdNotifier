@@ -5,4 +5,5 @@ public interface ISettingsReader {
     String getPackageNameToStart();
     String getTextToSpeak();
     int getSilentNotificationMinutes();
+    boolean isStartAppAllowed();
 }
