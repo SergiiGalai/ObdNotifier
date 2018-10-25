@@ -35,14 +35,10 @@
         android:singleLine="true"
         android:title="@string/pref_title_app_start_delay" />
 
-    <EditTextPreference
-        android:defaultValue="@string/pref_default_start_app_id"
-        android:inputType="text"
+    <com.chebur.obdnotifier.ApplicationListPreference
         android:key="start_app_id"
         android:dependency="is_start_app"
-        android:maxLines="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:title="@string/pref_title_start_app_id" />
+        android:title="@string/pref_title_start_app_id"
+        />
 
 </PreferenceScreen>

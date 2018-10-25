@@ -7,10 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Handler;
-import android.support.annotation.IntegerRes;
-import android.support.annotation.StringRes;
-
-import com.chebur.obdnotifier.helpers.Helper;
 
 import java.util.ArrayList;
 import java.util.Calendar;

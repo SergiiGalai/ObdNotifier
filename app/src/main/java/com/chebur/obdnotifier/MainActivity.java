@@ -1,7 +1,6 @@
 package com.chebur.obdnotifier;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -24,7 +23,7 @@ public class MainActivity extends Activity
 {
     private static final String TAG = "MainActivity";
     private TextToSpeech tts;
-    private BluetoothManager bluetoothManager;
+    //private BluetoothManager bluetoothManager;
     private Notification notification;
     private ApplicationLauncher launcher;
     private Button cancelButton;
@@ -38,7 +37,7 @@ public class MainActivity extends Activity
 
         launcher = new ApplicationLauncher(this);
         notification = new Notification(this);
-        bluetoothManager = new BluetoothManager(this);
+        //bluetoothManager = new BluetoothManager(this);
         runApplicationRepository = Factory.createRunApplicationRepository(this);
         settingsReader = Factory.createSettingsReader(this);
         tts = new TextToSpeech(this, createInitListener());
@@ -118,7 +117,7 @@ public class MainActivity extends Activity
                 public void run() {
                     context.finish();
                 }
-            }, 2000);
+            }, 3000);
         }
     }
 
@@ -139,7 +138,7 @@ public class MainActivity extends Activity
     }
 
     private boolean appShouldBeRun(String packageName){
-        return !launcher.isAppRunning(packageName);
+        return packageName.length() > 0 && !launcher.isAppRunning(packageName);
     }
 
     //private void testFeatures(){

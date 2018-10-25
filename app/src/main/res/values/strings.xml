@@ -13,8 +13,7 @@
 
     <string name="pref_title_app_start_delay">Application Start Delay, ms</string>
     <string name="pref_default_app_start_delay">10000</string>
-    <string name="pref_title_start_app_id">Start Application ID</string>
-    <string name="pref_default_start_app_id" translatable="false">com.MyGreenVolt</string>
+    <string name="pref_title_start_app_id">Start Application</string>
     <string name="pref_title_text_to_speak">Speak on start</string>
     <string name="pref_default_text_to_speak">Turn on OBD device and dash camera</string>
     <string name="pref_title_silent_notification_minutes">Keep silent in minutes since last one</string>
