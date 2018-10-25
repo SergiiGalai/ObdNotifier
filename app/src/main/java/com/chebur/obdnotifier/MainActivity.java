@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.util.Log;
@@ -30,6 +31,7 @@ public class MainActivity extends Activity
     private ApplicationLauncher.DelayedStartApplication delayedApplicationStart;
     private IRunApplicationRepository runApplicationRepository;
     private ISettingsReader settingsReader;
+    private long lastTimeNotified;
 
     private void initializeVariables() {
         cancelButton = findViewById(R.id.cancelButton);
@@ -67,11 +69,13 @@ public class MainActivity extends Activity
                 finish();
             }
         });
+
+        lastTimeNotified = runApplicationRepository.getLastTimeNotified();
+        notifyUser(this);
     }
 
     @NonNull
     private TextToSpeech.OnInitListener createInitListener(){
-        final Activity context = this;
         return new TextToSpeech.OnInitListener() {
             @Override
             public void onInit(int status) {
@@ -81,7 +85,11 @@ public class MainActivity extends Activity
                         Log.e(TAG, "This Language is not supported");
                     }
                     else{
-                        onTextToSpeechInitialized(context);
+                        if (userShouldBeNotified()){
+                            String textToSpeak = settingsReader.getTextToSpeak();
+                            notification.speak(tts, textToSpeak);
+                            runApplicationRepository.saveLastTimeNotified(TimeHelper.now());
+                        }
                     }
                 }
                 else
@@ -90,44 +98,42 @@ public class MainActivity extends Activity
         };
     }
 
-    private void onTextToSpeechInitialized(final Activity context) {
-        //Map<String, BluetoothDevice> devices = bluetoothManager.getPairedBluetoothDevices();
-        //showBluetoothDevices(devices);
-        //tryConnectToObdDevice(R.string.obd_bt_device_name, devices);
+    private void notifyUser(final Activity context) {
+        //testFeatures();
 
-        //List<String> appProcesses = launcher.getRunningAppProcesses();
-        //showProcesses(appProcesses);
+        String notificationText = settingsReader.getTextToSpeak();
+        notification.showLongToast(notificationText);
 
-        String textToSpeak = settingsReader.getTextToSpeak();
-        notification.showLongToast(textToSpeak);
-
-        if (userShouldBeNotified()){
-            notification.speak(tts, textToSpeak);
-            runApplicationRepository.saveLastTimeNotified(TimeHelper.now());
-
-            if (settingsReader.isStartAppAllowed()){
-                String packageName = settingsReader.getPackageNameToStart();
-                if (appShouldBeRun(packageName)){
-                    int delayMillis = settingsReader.getApplicationStartDelayMillis();
-                    delayedApplicationStart = launcher.delayedStart(packageName, delayMillis);
-                }else{
-                    notification.showLongToast(R.string.app_running);
-                }
+        if (userShouldBeNotified() && settingsReader.isStartAppAllowed()){
+            String packageName = settingsReader.getPackageNameToStart();
+            if (appShouldBeRun(packageName)){
+                int delayMillis = settingsReader.getApplicationStartDelayMillis();
+                delayedApplicationStart = launcher.delayedStart(packageName, delayMillis);
+            }else{
+                notification.showLongToast(R.string.app_running);
             }
         } else {
-            context.finish();
+            delayedRun(new Runnable() {
+                @Override
+                public void run() {
+                    context.finish();
+                }
+            }, 2000);
         }
+    }
+
+    private void delayedRun(final Runnable runnable, final int timeoutMillis ){
+        Handler handler = new Handler();
+        handler.postDelayed(runnable, timeoutMillis);
     }
 
     private boolean userShouldBeNotified(){
         //return true;
-
-        return runApplicationRepository.getLastTimeNotified() == 0
-                || getMinutesSinceLastNotification() >= settingsReader.getSilentNotificationMinutes();
+        return lastTimeNotified == 0
+                || getMinutesSinceLastNotification(lastTimeNotified) >= settingsReader.getSilentNotificationMinutes();
     }
 
-    private long getMinutesSinceLastNotification(){
-        long lastTimeNotified = runApplicationRepository.getLastTimeNotified();
+    private long getMinutesSinceLastNotification(long lastTimeNotified){
         long diff = TimeHelper.now() - lastTimeNotified;
         return TimeUnit.MILLISECONDS.toMinutes(diff);
     }
@@ -136,6 +142,14 @@ public class MainActivity extends Activity
         return !launcher.isAppRunning(packageName);
     }
 
+    //private void testFeatures(){
+        //Map<String, BluetoothDevice> devices = bluetoothManager.getPairedBluetoothDevices();
+        //showBluetoothDevices(devices);
+        //tryConnectToObdDevice(R.string.obd_bt_device_name, devices);
+
+        //List<String> appProcesses = launcher.getRunningAppProcesses();
+        //showProcesses(appProcesses);
+    //}
 //    private void showProcesses(List<String> appProcesses) {
 //        String processes = TextUtils.join("\n- ", appProcesses);
 //        bluetoothDevicesText.setText(processes);
