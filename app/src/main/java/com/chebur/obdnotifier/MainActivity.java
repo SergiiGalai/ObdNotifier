@@ -106,7 +106,7 @@ public class MainActivity extends Activity
         if (userShouldBeNotified() && settingsReader.isStartAppAllowed()){
             String packageName = settingsReader.getPackageNameToStart();
             if (appShouldBeRun(packageName)){
-                int delayMillis = settingsReader.getApplicationStartDelayMillis();
+                int delayMillis = settingsReader.getApplicationStartDelaySeconds() * 1000;
                 delayedApplicationStart = launcher.delayedStart(packageName, delayMillis);
             }else{
                 notification.showLongToast(R.string.app_running);

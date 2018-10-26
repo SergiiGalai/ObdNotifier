@@ -11,13 +11,11 @@
     <!-- Example General settings -->
     <string name="pref_header_general">General</string>
 
-    <string name="pref_title_app_start_delay">Application Start Delay, ms</string>
-    <string name="pref_default_app_start_delay">10000</string>
+    <string name="pref_title_app_start_delay">Application Start Delay, sec</string>
     <string name="pref_title_start_app_id">Start Application</string>
     <string name="pref_title_text_to_speak">Speak on start</string>
     <string name="pref_default_text_to_speak">Turn on OBD device and dash camera</string>
-    <string name="pref_title_silent_notification_minutes">Keep silent in minutes since last one</string>
-    <string name="pref_default_silent_notification_minutes" translatable="false">30</string>
+    <string name="pref_title_silent_notification_minutes">Keep silent since last start, minutes</string>
     <string name="pref_title_is_start_app">Start another application</string>
 
 </resources>

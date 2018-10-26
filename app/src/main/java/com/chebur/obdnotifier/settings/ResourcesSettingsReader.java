@@ -14,8 +14,8 @@ public class ResourcesSettingsReader implements ISettingsReader
     }
 
     @Override
-    public int getApplicationStartDelayMillis(){
-        return Helper.resourceToInt(context, R.integer.run_app_delay_millis);
+    public int getApplicationStartDelaySeconds(){
+        return Helper.resourceToInt(context, R.integer.run_app_delay_sec);
     }
 
     @Override

@@ -4,9 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-import com.chebur.obdnotifier.R;
-import com.chebur.obdnotifier.helpers.Helper;
-
 public class SharedPreferenceSettingsReader implements ISettingsReader
 {
     private final SharedPreferences preferences;
@@ -18,8 +15,8 @@ public class SharedPreferenceSettingsReader implements ISettingsReader
     }
 
     @Override
-    public int getApplicationStartDelayMillis(){
-        String val = preferences.getString("app_start_delay", String.valueOf(resourcesReader.getApplicationStartDelayMillis()));
+    public int getApplicationStartDelaySeconds(){
+        String val = preferences.getString("app_start_delay", String.valueOf(resourcesReader.getApplicationStartDelaySeconds()));
         return Integer.parseInt( val );
     }
 
