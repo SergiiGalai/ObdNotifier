@@ -16,7 +16,7 @@
         android:title="@string/pref_title_is_start_app" />
 
     <EditTextPreference
-        android:defaultValue="@string/pref_default_silent_notification_minutes"
+        android:defaultValue="@integer/donot_notify_delay_minutes"
         android:inputType="number"
         android:key="silent_notification_minutes"
         android:dependency="is_start_app"
@@ -26,7 +26,7 @@
         android:title="@string/pref_title_silent_notification_minutes" />
 
     <EditTextPreference
-        android:defaultValue="@string/pref_default_app_start_delay"
+        android:defaultValue="@integer/run_app_delay_sec"
         android:inputType="number"
         android:key="app_start_delay"
         android:dependency="is_start_app"
